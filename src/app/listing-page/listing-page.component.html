@@ -1,0 +1,22 @@
+<button class="addproducts" routerLink="addproduct" [routerLinkActive]="'active'">
+
+
+  Add products</button>
+<table>
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Product Name</th>
+      <th>Quantity available</th>
+      <th>Buy</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let product of productDetails;let i = index">
+    <tr>
+      <td>{{i+1}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.quantityAvailable}}</td>
+      <td class="buy" (click)="buyProduct(product._id)">View details and Order </td>
+    </tr>
+  </tbody>
+</table>

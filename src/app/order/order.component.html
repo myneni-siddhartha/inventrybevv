@@ -1,0 +1,51 @@
+<h2>Place your order here</h2>
+<div class="order">
+  <div>
+
+    <h4>user name:</h4>
+    <p>{{productDetails.name}}</p>
+
+    <h4>product available quantity:</h4>
+    <p>{{productDetails.quantityAvailable}}</p>
+
+  </div>
+
+  <div>
+
+    <label>product name:
+      <input type="string" [(ngModel)]="order.user" placeholder="type your name here">
+    </label>
+    <br>
+    <br>
+    <label>product quantity:
+      <input type="number" [(ngModel)]="order.quantity" placeholder="enter the required quantity">
+    </label>
+
+  </div>
+
+  <button (click)="placeOrder()">place order</button>
+
+  <br>
+  <button (click)="back()">back</button>
+</div>
+
+<div class="placeOrder">
+    <table>
+        <thead>
+          <tr>
+            <th>order date</th>
+            <th>order status</th>
+            <th>quantity</th>
+            <th>cancel order</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let order of previousOrders;let i = index">
+          <tr>
+            <td>{{order.createdOn |date:'medium' }}</td>
+            <td>{{order.orderStatus}}</td> 
+            <td>{{order.quantity}}</td>            
+            <td class="buy"  (click)="cancelOrder(order._id)">Cancel Order </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

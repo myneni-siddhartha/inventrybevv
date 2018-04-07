@@ -1,0 +1,13 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class LoginServiceService {
+
+  constructor() { }
+
+  call(){
+    console.log("service called!!!")
+    return 0;
+  }
+
+}
