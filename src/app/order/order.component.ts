@@ -42,24 +42,20 @@ export class OrderComponent implements OnInit {
     this.activatedR.params.subscribe(params => {
       this.productId = params;
       console.log(this.productId.id)
-      this.ListingService.getSingleProduct(this.productId.id)
-        .subscribe((data) => {
-          if (data._id) {
-            this.productDetails.name = data.name;
-            this.productDetails.quantityAvailable = data.quantityAvailable;
-            this.order.product = data._id;
-            console.log(data)
-          }
-          else {
-            console.log(data)
-          }
-        })
-
-      this.OrderService.getSingleProductOrders(this.productId)
-        .subscribe((data) => {
-          this.previousOrders = data;
-          console.log("orders", data)
-        })
+      // this.ListingService.getSingleProduct(this.productId.id)
+      //   .subscribe((data) => {
+      //     if (data._id) {
+      //       this.productDetails.name = data.name;
+      //       this.productDetails.quantityAvailable = data.quantityAvailable;
+      //       this.order.product = data._id;
+      //       console.log(data)
+      //     }
+      //     else {
+      //       console.log(data)
+      //     }
+      //   })
+      this.getSingleProductDetails();
+      this.getSingleProductOrders();
     });
 
 
@@ -73,11 +69,13 @@ export class OrderComponent implements OnInit {
       .subscribe(data => {
         if (data._id) {
           alert("order placed successfully")
-          console.log("order placed successfully")
-          this.back()
+          console.log("order placed successfully");
+          this.getSingleProductOrders();
+          this.getSingleProductDetails();
+          // this.back()
         }
         else {
-          alert("order could not be placed--> \nplease enter correct data")          
+          alert("order could not be placed--> \nplease enter correct data")
           console.log(data)
         }
       })
@@ -89,9 +87,11 @@ export class OrderComponent implements OnInit {
     this.OrderService.cancelOrder(id)
       .subscribe((data) => {
         console.log(data)
-        if (data == 1){
+        if (data == 1) {
           alert('order cancelled sucessfully')
-          this.back();
+          this.getSingleProductOrders();
+          this.getSingleProductDetails();
+          // this.back();
         }
         else {
           alert("can not cancel this order");
@@ -106,5 +106,30 @@ export class OrderComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+  getSingleProductOrders() {
+    this.OrderService.getSingleProductOrders(this.productId)
+      .subscribe((data) => {
+        this.previousOrders = data;
+        console.log("orders", data)
+      })
+  }
+
+  getSingleProductDetails() {
+    this.ListingService.getSingleProduct(this.productId.id)
+      .subscribe((data) => {
+        if (data._id) {
+          this.productDetails.name = data.name;
+          this.productDetails.quantityAvailable = data.quantityAvailable;
+          this.order.product = data._id;
+          console.log(data)
+        }
+        else {
+          console.log(data)
+        }
+      })
+  }
+
+
 
 }
